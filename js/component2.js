@@ -1,16 +1,17 @@
 console.log("component #2 coming online");
 
-var component2AddDiv = document.createElement("div");
-component2AddDiv.id = "component2-app";
-component2AddDiv.innerHTML = "Hello There from Component 2";
-
-document.getElementById("insertion").appendChild(component2AddDiv);
+const AListItem = (props) => (
+  <li>Index: {props.value}</li>
+);
 
 const AnotherComp = (props) => {
   return (
-    <ul>
-      {[1,2,3].map((i) => (<li key={i}>Index: {i}</li>))}
-    </ul>
+    <div style={{borderStyle: 'dotted', padding: '10px'}}>
+      <p>Component2.js</p>
+      <ul>
+        {[1,2,3].map((i) => (<AListItem key={i} value={i} />))}
+      </ul>
+    </div>
   );
 };
 
