@@ -29,7 +29,7 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/", func(c *gin.Context) {
-		rows, err := db.Raw("SELECT path, html, script_type FROM components").Rows()
+		rows, err := db.Raw("SELECT path, html, script_type FROM components ORDER BY id ASC").Rows()
 		defer rows.Close()
 
 		if err != nil {
