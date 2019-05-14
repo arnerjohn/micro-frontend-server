@@ -8,6 +8,6 @@
 	<div id="insertion"></div>
 	{{range .Components}}
 		{{.HTML}}
-		<script src="{{.Path}}" type="text/babel"></script>
+		<script src="{{.Path}}" type="{{.ScriptType}}"></script>
 	{{end}}
 </html>

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -10,8 +9,9 @@ import (
 )
 
 type Component struct {
-	Path string
-	HTML template.HTML
+	Path       string
+	HTML       template.HTML
+	ScriptType string
 }
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/", func(c *gin.Context) {
-		rows, err := db.Raw("SELECT path, html FROM components").Rows()
+		rows, err := db.Raw("SELECT path, html, script_type FROM components").Rows()
 		defer rows.Close()
 
 		if err != nil {
@@ -41,10 +41,11 @@ func main() {
 		for rows.Next() {
 			var path string
 			var html string
+			var scriptType string
 
-			rows.Scan(&path, &html)
+			rows.Scan(&path, &html, &scriptType)
 
-			comps = append(comps, Component{Path: path, HTML: template.HTML(html)})
+			comps = append(comps, Component{Path: path, HTML: template.HTML(html), ScriptType: scriptType})
 		}
 
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
